@@ -1,0 +1,514 @@
+/* ============================================================
+   WARDEN — design tokens
+   ============================================================ */
+:root {
+  --black-deep:   #050403;
+  --black:        #0A0806;
+  --panel:        #15100B;
+  --panel-border: #2C2318;
+  --gold:         #C9A24B;
+  --gold-bright:  #E9C46A;
+  --red:          #7A1220;
+  --red-bright:   #B5232F;
+  --ivory:        #F1E9D8;
+  --muted:        #8C8172;
+
+  --font-display: "Cinzel", serif;
+  --font-body:    "Cormorant Garamond", serif;
+  --font-mono:    "JetBrains Mono", monospace;
+
+  --max-width: 1180px;
+  --section-pad: clamp(4.5rem, 9vw, 8rem);
+}
+
+/* ============================================================
+   Reset
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  margin: 0;
+  background: var(--black);
+  color: var(--ivory);
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: var(--font-display); margin: 0; font-weight: 600; }
+p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+img { max-width: 100%; display: block; }
+
+::selection { background: var(--red); color: var(--ivory); }
+
+/* Focus visibility */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  background: var(--gold);
+  color: var(--black-deep);
+  padding: 0.6rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  z-index: 200;
+  transition: top 0.2s ease;
+}
+.skip-link:focus { top: 1rem; }
+
+/* ============================================================
+   Ember canvas — full-page ambient background
+   ============================================================ */
+#ember-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+/* ============================================================
+   Shared layout
+   ============================================================ */
+.section-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.75rem;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: clamp(1.9rem, 3.4vw, 2.75rem);
+  color: var(--ivory);
+  letter-spacing: 0.01em;
+  margin-bottom: 1.5rem;
+}
+
+.section-body {
+  max-width: 62ch;
+  color: var(--muted);
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+/* ============================================================
+   Header
+   ============================================================ */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease;
+}
+.site-header.scrolled {
+  background: rgba(10, 8, 6, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1.1rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  letter-spacing: 0.12em;
+}
+.brand-mark {
+  color: var(--red-bright);
+  font-size: 1.1rem;
+  transform: rotate(45deg);
+  display: inline-block;
+}
+.brand-name { font-size: 1rem; color: var(--ivory); }
+.brand-name.small { font-size: 0.9rem; }
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 2.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.main-nav a {
+  color: var(--muted);
+  position: relative;
+  padding: 0.25rem 0;
+  transition: color 0.25s ease;
+}
+.main-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -2px;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+.main-nav a:hover { color: var(--ivory); }
+.main-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+.main-nav a.nav-cta {
+  color: var(--gold-bright);
+  border: 1px solid var(--gold);
+  padding: 0.45rem 0.9rem;
+  border-radius: 2px;
+}
+.main-nav a.nav-cta::after { display: none; }
+.main-nav a.nav-cta:hover {
+  background: var(--gold);
+  color: var(--black-deep);
+}
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  padding: 8rem 1.75rem 4rem;
+}
+
+.hero-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 900px;
+  height: 900px;
+  transform: translate(-50%, -55%);
+  background: radial-gradient(circle, rgba(201,162,75,0.16) 0%, rgba(122,18,32,0.08) 42%, transparent 70%);
+  filter: blur(10px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+}
+
+.hero-title {
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  line-height: 1.12;
+  color: var(--ivory);
+  letter-spacing: 0.01em;
+  text-shadow: 0 0 40px rgba(201,162,75,0.15);
+}
+
+.hero-sub {
+  margin: 1.75rem auto 0;
+  max-width: 56ch;
+  font-size: 1.3rem;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.hero-meta {
+  margin-top: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 36px;
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+}
+.scroll-cue span {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 3px;
+  height: 7px;
+  background: var(--gold);
+  border-radius: 2px;
+  transform: translateX(-50%);
+  animation: scroll-cue-move 1.8s ease-in-out infinite;
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.95rem 1.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.btn span { position: relative; z-index: 1; }
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  color: var(--black-deep);
+  font-weight: 600;
+  box-shadow: 0 0 0 rgba(233,196,106,0);
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(201,162,75,0.35);
+}
+
+.btn-outline {
+  color: var(--ivory);
+  border: 1px solid var(--red-bright);
+  background: rgba(122,18,32,0.08);
+}
+.btn-outline::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--red-bright);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+  z-index: 0;
+}
+.btn-outline:hover::before { transform: scaleX(1); }
+.btn-outline:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(181,35,47,0.3);
+}
+
+/* ============================================================
+   Shield wall grid
+   ============================================================ */
+.wall {
+  padding: var(--section-pad) 0;
+  position: relative;
+  border-top: 1px solid var(--panel-border);
+}
+
+.shield-grid {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1px;
+  background: var(--panel-border);
+  border: 1px solid var(--panel-border);
+}
+
+.shield-card {
+  position: relative;
+  background: var(--black);
+  padding: 1.9rem 1.7rem;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+.shield-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--gold);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.4s ease;
+}
+.shield-card[data-status="tracked"]::before { background: var(--muted); }
+.shield-card:hover::before { transform: scaleY(1); }
+.shield-card:hover { background: var(--panel); }
+
+.shield-id {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+}
+.shield-card[data-status="tracked"] .shield-id { color: var(--muted); }
+
+.shield-status {
+  float: right;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--panel-border);
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+}
+.shield-card[data-status="live"] .shield-status {
+  color: var(--gold-bright);
+  border-color: rgba(201,162,75,0.4);
+}
+
+.shield-card h3 {
+  font-size: 1.15rem;
+  margin: 1rem 0 0.6rem;
+  color: var(--ivory);
+  clear: both;
+}
+
+.shield-card p {
+  font-size: 0.98rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+/* ============================================================
+   Pipeline
+   ============================================================ */
+.pipeline {
+  padding: var(--section-pad) 0;
+  background: var(--black-deep);
+  border-top: 1px solid var(--panel-border);
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.pipeline-list {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.pipeline-step {
+  display: flex;
+  gap: 1.75rem;
+  align-items: flex-start;
+  padding: 1.6rem 0;
+  border-top: 1px solid var(--panel-border);
+}
+.pipeline-step:last-child { border-bottom: 1px solid var(--panel-border); }
+
+.step-num {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--red-bright);
+  min-width: 3ch;
+}
+
+.pipeline-step h3 {
+  font-size: 1.25rem;
+  color: var(--ivory);
+  margin-bottom: 0.4rem;
+}
+.pipeline-step p {
+  color: var(--muted);
+  font-size: 1.02rem;
+  max-width: 60ch;
+}
+
+/* ============================================================
+   CTA
+   ============================================================ */
+.cta {
+  position: relative;
+  padding: var(--section-pad) 0;
+  text-align: center;
+  overflow: hidden;
+}
+.cta-glow {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 700px; height: 700px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(181,35,47,0.12) 0%, transparent 68%);
+  pointer-events: none;
+}
+.cta-inner { display: flex; flex-direction: column; align-items: center; }
+.cta .section-body { margin: 0 auto; text-align: center; }
+.cta .hero-actions { margin-top: 2.5rem; }
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.site-footer {
+  border-top: 1px solid var(--panel-border);
+  padding: 2.5rem 0 3rem;
+}
+.footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.footer-inner p {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 720px) {
+  .main-nav { gap: 1.1rem; }
+  .main-nav a:not(.nav-cta) { display: none; }
+  .hero { padding-top: 7rem; }
+  .pipeline-step { gap: 1.1rem; }
+}

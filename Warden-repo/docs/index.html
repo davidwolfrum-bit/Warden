@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warden — Find out what your AI will do when tested</title>
+<meta name="description" content="Warden runs adversarial prompts against your AI application and reports exactly where it breaks — mapped to the OWASP Top 10 for LLM Applications.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+<canvas id="ember-canvas" aria-hidden="true"></canvas>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+    <a class="brand" href="#top" aria-label="Warden home">
+      <span class="brand-mark" aria-hidden="true">⚔</span>
+      <span class="brand-name">WARDEN</span>
+    </a>
+    <nav class="main-nav" aria-label="Primary">
+      <a href="#wall">Coverage</a>
+      <a href="#pipeline">How it works</a>
+      <a href="#download">Download</a>
+      <a href="https://github.com/davidwolfrum-bit/Warden" class="nav-cta" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <p class="eyebrow reveal">Stand behind your shield</p>
+      <h1 class="hero-title reveal" data-delay="1">
+        Find out what your AI<br>will do when tested.
+      </h1>
+      <p class="hero-sub reveal" data-delay="2">
+        Warden runs adversarial prompts against your AI application and reports exactly
+        where it breaks — mapped to the OWASP Top&nbsp;10 for LLM Applications, the
+        standard security teams audit against.
+      </p>
+      <div class="hero-actions reveal" data-delay="3">
+        <a href="https://github.com/davidwolfrum-bit/Warden/releases" class="btn btn-gold magnetic" target="_blank" rel="noopener">
+          <span>Download the tool</span>
+        </a>
+        <a href="https://github.com/davidwolfrum-bit/Warden/releases" class="btn btn-outline magnetic" target="_blank" rel="noopener">
+          <span>Enter the trial</span>
+        </a>
+      </div>
+      <p class="hero-meta reveal" data-delay="4">Windows &amp; Linux &middot; No account required &middot; MIT licensed</p>
+    </div>
+    <div class="scroll-cue" aria-hidden="true"><span></span></div>
+  </section>
+
+  <!-- THE SHIELD WALL -->
+  <section class="wall" id="wall">
+    <div class="section-inner">
+      <p class="eyebrow reveal">The shield wall</p>
+      <h2 class="section-title reveal">Tested against the real standard</h2>
+      <p class="section-body reveal">
+        Warden's payload library is organized under the OWASP Top&nbsp;10 for LLM Applications
+        (2025). Two categories — Supply Chain and Data/Model Poisoning — require pipeline
+        access rather than prompt-based testing, so Warden tracks them honestly instead of
+        faking coverage.
+      </p>
+
+      <ul class="shield-grid" role="list">
+        <li class="shield-card reveal" data-status="live">
+          <span class="shield-id">LLM01</span>
+          <span class="shield-status">Live</span>
+          <h3>Prompt Injection</h3>
+          <p>Direct overrides, fake system updates, and instructions hidden inside content the model is asked to process.</p>
+        </li>
+        <li class="shield-card reveal" data-status="live">
+          <span class="shield-id">LLM02</span>
+          <span class="shield-status">Live</span>
+          <h3>Sensitive Information Disclosure</h3>
+          <p>Hypothetical framing and extraction attempts aimed at private data or memorized training content.</p>
+        </li>
+        <li class="shield-card reveal" data-status="tracked">
+          <span class="shield-id">LLM03</span>
+          <span class="shield-status">Tracked only</span>
+          <h3>Supply Chain</h3>
+          <p>Tampered weights and dependencies — requires provenance auditing, not a single prompt.</p>
+        </li>
+        <li class="shield-card reveal" data-status="tracked">
+          <span class="shield-id">LLM04</span>
+          <span class="shield-status">Tracked only</span>
+          <h3>Data and Model Poisoning</h3>
+          <p>Happens at training time — out of scope for black-box prompt testing.</p>
+        </li>
+        <li class="shield-card reveal" data-status="live">
+          <span class="shield-id">LLM05</span>
+          <span class="shield-status">Live</span>
+          <h3>Improper Output Handling</h3>
+          <p>Checks whether raw, unescaped markup passes through unsanitized into downstream systems.</p>
+        </li>
+        <li class="shield-card reveal" data-status="live">
+          <span class="shield-id">LLM06</span>
+          <span class="shield-status">Live</span>
+          <h3>Excessive Agency</h3>
+          <p>Probes whether a model can be primed to commit to destructive, real-world actions.</p>
+        </li>
+        <li class="shield-card reveal" data-status="live">
+          <span class="shield-id">LLM07</span>
+          <span class="shield-status">Live</span>
+          <h3>System Prompt Leakage</h3>
+          <p>Direct and indirect attempts to extract the instructions a model was given.</p>
+        </li>
+        <li class="shield-card reveal" data-status="live">
+          <span class="shield-id">LLM08</span>
+          <span class="shield-status">Live</span>
+          <h3>Vector &amp; Embedding Weaknesses</h3>
+          <p>Tests whether retrieval respects access boundaries between users and tenants.</p>
+        </li>
+        <li class="shield-card reveal" data-status="live">
+          <span class="shield-id">LLM09</span>
+          <span class="shield-status">Live</span>
+          <h3>Misinformation</h3>
+          <p>Checks whether a model fabricates a confident answer instead of flagging a false premise.</p>
+        </li>
+        <li class="shield-card reveal" data-status="live">
+          <span class="shield-id">LLM10</span>
+          <span class="shield-status">Live</span>
+          <h3>Unbounded Consumption</h3>
+          <p>Tests for limits against single requests that try to consume disproportionate compute.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PIPELINE -->
+  <section class="pipeline" id="pipeline">
+    <div class="section-inner">
+      <p class="eyebrow reveal">The march</p>
+      <h2 class="section-title reveal">Five stages, one report</h2>
+
+      <ol class="pipeline-list">
+        <li class="pipeline-step reveal">
+          <span class="step-num">01</span>
+          <div>
+            <h3>Target</h3>
+            <p>Connects to the AI system under test — Claude, GPT, or a mock target for dry runs.</p>
+          </div>
+        </li>
+        <li class="pipeline-step reveal">
+          <span class="step-num">02</span>
+          <div>
+            <h3>Payload library</h3>
+            <p>A categorized set of adversarial prompts, mapped to the OWASP Top&nbsp;10 for LLM Applications.</p>
+          </div>
+        </li>
+        <li class="pipeline-step reveal">
+          <span class="step-num">03</span>
+          <div>
+            <h3>Runner</h3>
+            <p>Sends every payload in sequence and collects each response, unattended.</p>
+          </div>
+        </li>
+        <li class="pipeline-step reveal">
+          <span class="step-num">04</span>
+          <div>
+            <h3>Evaluator</h3>
+            <p>Scores each response pass or fail — and flags low-confidence calls for human review instead of guessing.</p>
+          </div>
+        </li>
+        <li class="pipeline-step reveal">
+          <span class="step-num">05</span>
+          <div>
+            <h3>Report</h3>
+            <p>A readable summary, severity-ranked and mapped back to the standard your team already audits against.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- CTA / DOWNLOAD -->
+  <section class="cta" id="download">
+    <div class="cta-glow" aria-hidden="true"></div>
+    <div class="section-inner cta-inner">
+      <p class="eyebrow reveal">No shield goes untested</p>
+      <h2 class="section-title reveal">Bring your own armor to the field</h2>
+      <p class="section-body reveal">
+        Warden is open source and MIT licensed. Point it at a system you own or have
+        authorization to test — the report tells you exactly where it held and where it broke.
+      </p>
+      <div class="hero-actions reveal">
+        <a href="https://github.com/davidwolfrum-bit/Warden/releases" class="btn btn-gold magnetic" target="_blank" rel="noopener"><span>Download the tool</span></a>
+        <a href="https://github.com/davidwolfrum-bit/Warden#readme" class="btn btn-outline magnetic" id="trial" target="_blank" rel="noopener"><span>Read the docs</span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span class="brand-name small">WARDEN</span>
+    <p>Built for testing AI systems you own or have explicit authorization to test.</p>
+  </div>
+</footer>
+
+<script src="js/particles.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

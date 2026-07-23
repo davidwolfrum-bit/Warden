@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warden — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<header class="app-header">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">⚔</span>
+    <span class="brand-name">WARDEN</span>
+  </div>
+  <span class="tagline">Local test runner &middot; {{ total_payloads }} payloads loaded</span>
+</header>
+
+<main class="app-main">
+
+  <!-- CONFIG PANEL -->
+  <section class="panel config-panel" id="config-panel" aria-label="Run configuration">
+    <h2>Configure run</h2>
+
+    <div class="field-row">
+      <label for="provider">Target</label>
+      <select id="provider">
+        <option value="mock" selected>Mock (no API key, for dry runs)</option>
+        <option value="anthropic">Anthropic (Claude)</option>
+        <option value="openai">OpenAI (GPT)</option>
+      </select>
+    </div>
+
+    <div class="field-row" id="model-row" hidden>
+      <label for="model">Model</label>
+      <input type="text" id="model" placeholder="e.g. claude-sonnet-4-6 or gpt-4o">
+    </div>
+
+    <div class="field-row" id="key-row" hidden>
+      <label for="api-key">API key</label>
+      <input type="password" id="api-key" placeholder="Used only for this run — never stored or logged" autocomplete="off">
+      <p class="field-hint">Sent directly to your local Warden server and used to call the provider's API for this run only. It is not written to disk or included in the report.</p>
+    </div>
+
+    <div class="field-row">
+      <label>Categories</label>
+      <div class="category-grid" id="category-grid">
+        {% for c in categories %}
+        <label class="category-chip">
+          <input type="checkbox" name="category" value="{{ c }}" checked>
+          <span>{{ c.replace('_', ' ') }}</span>
+          <span class="chip-count">{{ testable_counts[c] }}</span>
+        </label>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="field-row">
+      <label for="delay">Delay between requests (seconds)</label>
+      <input type="number" id="delay" min="0" max="10" step="0.1" value="0.5">
+    </div>
+
+    <button class="btn btn-gold" id="run-btn" type="button">Run Warden</button>
+    <p class="field-hint" id="config-error" role="alert"></p>
+  </section>
+
+  <!-- LIVE RUN PANEL -->
+  <section class="panel run-panel" id="run-panel" aria-label="Run progress" hidden>
+    <h2>Running</h2>
+
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <p class="progress-label" id="progress-label">0 / 0</p>
+
+    <div class="stats-row" id="stats-row">
+      <div class="stat"><span class="stat-value" id="stat-pass">0</span><span class="stat-label">Passed</span></div>
+      <div class="stat"><span class="stat-value" id="stat-fail">0</span><span class="stat-label">Failed</span></div>
+      <div class="stat"><span class="stat-value" id="stat-review">0</span><span class="stat-label">Review</span></div>
+    </div>
+
+    <ul class="result-feed" id="result-feed" role="log" aria-live="polite"></ul>
+
+    <div class="run-actions">
+      <button class="btn btn-outline" id="report-btn" hidden>Download report</button>
+      <button class="btn btn-ghost" id="new-run-btn" hidden>Start a new run</button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="app-footer">
+  <p>Test only systems you own or have explicit authorization to test.</p>
+</footer>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

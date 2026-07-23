@@ -1,0 +1,7 @@
+# Core dependency for the GUI:
+flask
+
+# Optional — only needed for the provider you actually use.
+# The CLI (main.py) needs neither of these for --provider mock.
+#   pip install anthropic     # for --provider anthropic / Anthropic target in the GUI
+#   pip install openai        # for --provider openai / OpenAI target in the GUI
