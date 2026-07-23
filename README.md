@@ -1,63 +1,53 @@
 # Warden
 
-An open-source tool for testing AI-powered applications for security weaknesses —
-prompt injection and jailbreak resistance, mapped to the OWASP Top 10 for LLM Applications.
+An open-source tool for testing AI-powered applications for security weaknesses — starting with prompt injection and jailbreak resistance.
 
-This repo has two independent things in it:
+## What it does
 
-```
-Warden/
-├── app/     ← the actual tool (what you download and run)
-└── docs/    ← the website + docs (what GitHub Pages serves)
-```
+Companies shipping AI features (chatbots, AI agents, AI-powered support tools) need to know whether their system can be manipulated into ignoring its instructions, leaking data it shouldn't, or taking actions it wasn't meant to take. Warden automates that testing: point it at a target AI system, it runs a library of known adversarial prompts against it, and reports which ones succeeded — i.e., which ones are real vulnerabilities.
 
-They don't depend on each other. `docs/` never imports or runs `app/` — it's a
-static page that just links out to wherever the app is downloaded from
-(the Releases page). Editing one never risks breaking the other.
+This is the same category of tool as open-source projects like [Garak](https://github.com/leondz/garak) and Microsoft's [PyRIT](https://github.com/Azure/PyRIT) — Warden is my own build of this concept, developed as part of learning AI security hands-on.
 
-## app/ — the tool
+## Why this exists
 
-A CLI and a local GUI, both thin front ends over the same `warden/` engine
-(`target.py`, `payloads.py`, `runner.py`, `evaluator.py`, `report.py`).
+This project is part of my path into AI security engineering. Rather than only using existing red-teaming tools, I'm building my own from the ground up to actually understand how they work under the hood — the same build → break → understand → fix loop I've used on earlier projects, applied to AI systems instead of traditional web apps.
 
-```
-cd app
-pip install -r requirements.txt
-python main.py --provider mock          # CLI
-python app.py                           # GUI, opens in your browser
-```
+## How it works
 
-See `app/README.md` for full usage.
+1. **Target** — connects to a real AI system (via its API) that's being tested
+2. **Payload library** — a categorized set of known prompt injection and jailbreak attempts
+3. **Runner** — sends each payload to the target and collects the responses
+4. **Evaluator** — determines whether each response counts as a pass (AI resisted) or fail (AI was manipulated)
+5. **Report** — summarizes results, mapped to the [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) where relevant
 
-This is what gets zipped and attached to a GitHub Release.
+## Status
 
-## docs/ — the website
+🚧 Early development. Currently building out the core pipeline (target connector → payload library → runner → evaluator → report).
 
-Static HTML/CSS/JS, no build step, no server. GitHub Pages serves this folder
-directly if you point Pages at `main` branch → `/docs` in repo Settings →
-Pages. That's why it's named `docs` rather than `site` — GitHub recognizes
-that folder name as a built-in Pages source.
+## Roadmap
 
-## Publishing a new version
+- [ ] Basic target connector (single AI provider)
+- [ ] Starter payload library (core prompt injection patterns)
+- [ ] Test runner + simple keyword-based evaluator
+- [ ] Readable report output
+- [ ] Expanded payload categories
+- [ ] Smarter (LLM-based) evaluation
+- [ ] Config file support for custom targets/tests
+- [ ] Agent / tool-use specific test cases
+- [ ] RAG-specific test cases
 
-1. Tag a release (`git tag v0.1.1 && git push --tags`), zip the contents of
-   `app/`, attach the zip to the GitHub Release.
-2. The download button on the website already links to
-   `github.com/<you>/Warden/releases` — nothing to update there per release.
-3. Push to `main` — Pages picks up any `docs/` changes automatically.
+## Usage
 
-## Status / things to double check before your first push
-
-- **License**: the website currently says "MIT licensed" but there's no
-  `LICENSE` file in this repo yet. Add one (or change the copy) before
-  publishing — an unlicensed public repo defaults to "all rights reserved"
-  regardless of what the website claims.
-- **Windows support**: the website also claims "Windows & Linux" — worth
-  confirming that's actually been tested before it goes live, since nothing
-  in `app/` currently checks for or excludes either platform.
+*(coming soon — not yet functional)*
 
 ## Disclaimer
 
-Warden is intended for testing AI systems you own or have explicit
-authorization to test. Do not use it against third-party systems without
-permission.
+Warden is intended for testing AI systems you own or have explicit authorization to test. Do not use it against third-party systems without permission.
+
+## About
+
+Built as part of my ongoing cybersecurity learning journey, alongside other projects in my [WoldavSiteDevTools](https://github.com/davidwolfrum-bit/WoldavSiteDevTools) repo.
+
+## Download here-> 
+
+https://davidwolfrum-bit.github.io/Warden/
