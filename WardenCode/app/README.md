@@ -1,19 +1,30 @@
 # Warden GUI
 
+> **To start the app: open (double-click) `run.bat` (Windows) or `run.sh`
+> (Mac/Linux) in this folder.** That's the whole launch step — it installs
+> anything missing and opens the app in your browser automatically.
+
 A local, single-user web app for running Warden without the command line.
 Everything runs on your machine — no account, no external service.
 
 ## Run it
 
+**Mac/Linux:** double-click `run.sh` (or run `./run.sh` in a terminal).
+**Windows:** double-click `run.bat`.
+
+Either one installs Flask automatically on first run if it's missing, then
+starts a local server and opens `http://127.0.0.1:5057` in your browser.
+
+If double-clicking doesn't work on your system (some OSes block executing
+scripts from Finder/Explorer by default), open a terminal in this folder
+and run it manually instead:
+
 ```
-pip install flask
+pip install -r requirements.txt
 pip install anthropic     # only if you'll test against Claude
 pip install openai        # only if you'll test against GPT
 python app.py
 ```
-
-This starts a local server and opens `http://127.0.0.1:5057` in your
-browser automatically.
 
 ## Using it
 

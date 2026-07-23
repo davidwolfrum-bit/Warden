@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Warden run artifacts
+warden_report.md
+app/reports/
+
+# OS/editor cruft
+.DS_Store
+.vscode/
+.idea/
